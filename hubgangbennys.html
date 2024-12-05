@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Gang Del Benny's</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 70px;
+            background-color: #000;
+            color: white;
+            text-align: start;
+            background-image: url('https://cdn.discordapp.com/attachments/1314180428420354070/1314186366405316671/cool-red-skull-on-black-ixfydjkx0zan0hfm.jpg?ex=6752daee&is=6751896e&hm=e3fec95da1e5516961e745fc1c27f2f2a70249034112e781f2bd5598373c0b40&'); /* Aggiungi il link per l'immagine di sfondo */
+            background-size: cover;
+            background-position: center;
+        }
+        header {
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px;
+        }
+        .section {            
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: rgb(255, 255, 255);
+        }
+        textarea {
+            width: 25%;
+            height: 50px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ffffff;
+        }
+        .info-contatti {
+            position: absolute; /* Posizione assoluta per spostarla */
+            top: 10px; /* Aggiunge uno spazio dal bordo superiore */
+            right: 40px; /* Aggiunge uno spazio dal bordo destro */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: rgb(255, 255, 255);
+            background-color: rgba(0, 0, 0, 0.7); /* Aggiungi un leggero sfondo scuro per la leggibilità */
+            text-align: right;
+            width: 250px; /* Puoi regolare la larghezza come desideri */
+        }
+        .informazioni {
+            position: absolute; /* Posizione assoluta per spostarla */
+            bottom: 10px; /* Aggiunge uno spazio dal bordo inferiore */
+            right: 40px; /* Aggiunge uno spazio dal bordo destro */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: rgb(255, 255, 255);
+            background-color: rgba(0, 0, 0, 0.7); /* Aggiungi un leggero sfondo scuro per la leggibilità */
+            text-align: right;
+            width: 250px; /* Puoi regolare la larghezza come desideri */
+        }        
+        .logo {
+            position: absolute;
+            top: 20px;  /* Spazio dal bordo superiore */
+            left: 50%;  /* Posiziona il logo a metà larghezza della finestra */
+            transform: translateX(-50%);  /* Sposta il logo indietro di metà della sua larghezza per centrarlo */
+            width: 100px;  /* Imposta la larghezza del logo */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hub Gang Del Benny's</h1>
+    </header>
+
+    <!-- Logo -->
+    <img src="https://cdn.discordapp.com/attachments/1314180428420354070/1314180475815723049/IMG_6441.jpg?ex=6752d571&is=675183f1&hm=d852888fced28fd62651f43c3b0f802b48c2a893db19b586a90925a633135dd8&" alt="Logo" class="logo">
+
+    <div class="container">
+        <!-- Sezione Aggiungi Contatti -->
+        <div class="section" id="contatti">
+            <h2>Aggiungi Contatti</h2>
+            <textarea id="contattiText" placeholder="Scrivi i tuoi contatti qui..."></textarea>
+            <br>
+            <button onclick="salvaContatti()">Salva Contatti</button>
+        </div>
+
+        <!-- Sezione Aggiungi Informazioni -->
+        <div class="section" id="informazioni">
+            <h2>Aggiungi Informazioni</h2>
+            <textarea id="informazioniText" placeholder="Scrivi le informazioni qui..."></textarea>
+            <br>
+            <button onclick="salvaInformazioni()">Salva Informazioni</button>
+        </div>
+
+       <!-- Sezione Info Contatti -->
+<div class="info-contatti" id="infoContatti">
+    <h3>Info Contatti</h3>
+    <div id="contattiSalvati"></div>            
+</div>
+
+<!-- Sezione Informazioni -->
+<div class="informazioni" id="informazioni">
+    <h3>Informazioni</h3>
+    <div id="informazioniSalvate"></div>            
+</div>
+
+<script>
+    // Funzione per salvare i contatti nel LocalStorage
+    function salvaContatti() {
+        const contatti = document.getElementById('contattiText').value;
+        if (contatti) {
+            salvaInfo('Contatti', contatti);
+        }
+    }
+
+    // Funzione per salvare le informazioni nel LocalStorage
+    function salvaInformazioni() {
+        const informazioni = document.getElementById('informazioniText').value;
+        if (informazioni) {
+            salvaInfo('Informazioni', informazioni);
+        }
+    }
+
+    // Funzione per salvare le informazioni nella sezione "Info Salvate"
+    function salvaInfo(tipo, testo) {
+        const infoSalvate = JSON.parse(localStorage.getItem('infoSalvate')) || [];
+
+        // Aggiungi il nuovo salvataggio
+        infoSalvate.push({ tipo: tipo, testo: testo });
+
+        // Salva nel LocalStorage
+        localStorage.setItem('infoSalvate', JSON.stringify(infoSalvate));
+
+        // Pulisce le aree di input
+        document.getElementById('contattiText').value = '';
+        document.getElementById('informazioniText').value = '';
+
+        // Ricarica e mostra tutte le info salvate
+        caricaInfoSalvate();
+    }
+
+    // Funzione per caricare le info salvate da LocalStorage
+    function caricaInfoSalvate() {
+        const infoSalvate = JSON.parse(localStorage.getItem('infoSalvate')) || [];
+        
+        const contattiDiv = document.getElementById('contattiSalvati');
+        const informazioniDiv = document.getElementById('informazioniSalvate');
+
+        contattiDiv.innerHTML = '';  // Pulisce la lista dei contatti
+        informazioniDiv.innerHTML = '';  // Pulisce la lista delle informazioni
+
+        // Aggiungi ogni salvataggio alla lista corrispondente
+        infoSalvate.forEach((salvataggio, index) => {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${salvataggio.tipo}:</strong> ${salvataggio.testo} <button onclick="rimuoviRiga(${index})">X</button>`;
+            
+            if (salvataggio.tipo === 'Contatti') {
+                contattiDiv.appendChild(p);  // Aggiungi ai contatti
+            } else if (salvataggio.tipo === 'Informazioni') {
+                informazioniDiv.appendChild(p);  // Aggiungi alle informazioni
+            }
+        });
+    }
+
+    // Funzione per rimuovere una riga dalla sezione "Info Salvate"
+    function rimuoviRiga(index) {
+        const infoSalvate = JSON.parse(localStorage.getItem('infoSalvate')) || [];
+        infoSalvate.splice(index, 1);  // Rimuove l'elemento alla posizione 'index'
+
+        // Ricarica le info salvate
+        localStorage.setItem('infoSalvate', JSON.stringify(infoSalvate));
+        caricaInfoSalvate();  // Ricarica la lista aggiornata
+    }
+
+    // Funzione per cancellare una riga dalla lista ogni volta che viene cliccato il tasto
+    function cancellaRiga() {
+        const infoSalvate = JSON.parse(localStorage.getItem('infoSalvate')) || [];
+        if (infoSalvate.length > 0) {
+            infoSalvate.pop();  // Rimuove l'ultima riga
+            localStorage.setItem('infoSalvate', JSON.stringify(infoSalvate));
+            caricaInfoSalvate();  // Ricarica la lista aggiornata
+        }
+    }
+
+    // Carica le info salvate quando la pagina viene aperta
+    window.onload = caricaInfoSalvate;
+</script>
